@@ -9,11 +9,14 @@
   },
   "dependencies": {
     "core-js": "^3.6.5",
+    "ua-device": "^0.1.10",
     "vue": "^2.6.11",
     "vue-class-component": "^7.2.3",
     "vue-property-decorator": "^8.4.2"
   },
   "devDependencies": {
+    "@sentry/browser": "^5.20.1",
+    "@sentry/integrations": "^5.20.0",
     "@vue/cli-plugin-babel": "~4.4.0",
     "@vue/cli-plugin-typescript": "~4.4.0",
     "@vue/cli-service": "~4.4.0",
