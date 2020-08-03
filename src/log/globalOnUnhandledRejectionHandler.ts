@@ -4,10 +4,10 @@ import {
   addExceptionTypeValue, eventFromPlainObject,
   eventFromStacktrace,
   eventFromString,
-} from "./util/utils";
+} from './util/utils';
 import {isDOMError, isDOMException, isError, isErrorEvent, isEvent, isPlainObject, isPrimitive} from './util/is'
-import { Event } from "./types";
-import {computeStackTrace} from "./util/tracekit";
+import { Event } from './types';
+import {computeStackTrace} from './util/tracekit';
 
 export default function callback(e: any) {
   let error = e;
@@ -27,7 +27,7 @@ export default function callback(e: any) {
     else if ('detail' in e && 'reason' in e.detail) {
       error = e.detail.reason;
     }
-  } catch (_oO) {
+  } catch (e) {
     // no-empty
   }
 

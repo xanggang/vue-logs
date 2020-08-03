@@ -1,4 +1,4 @@
-import globalOnErrorHandler from "./globalOnErrorHandler";
+import globalOnErrorHandler from './globalOnErrorHandler';
 import globalOnUnhandledRejectionHandler from './globalOnUnhandledRejectionHandler'
 import { getFunctionName } from './util/utils'
 import UA from 'ua-device'
@@ -43,12 +43,12 @@ export default class LogSdk {
       callback: globalOnUnhandledRejectionHandler
     })
 
-    let output = new UA(navigator.userAgent);
+    const output = new UA(navigator.userAgent);
 
     console.log(output);
   }
 
-  public addInstrumentationHandler (handler: InstrumentHandler) {
+  public addInstrumentationHandler(handler: InstrumentHandler) {
     if (!handler || typeof handler.type !== 'string' || typeof handler.callback !== 'function') {
       return;
     }
@@ -69,11 +69,10 @@ export default class LogSdk {
     }
   }
 
-  instrumentError() {
+  public instrumentError() {
     const _oldOnErrorHandler = window.onerror;
     const that = this
     window.onerror = function(msg: any, url: any, line: any, column: any, error: any): boolean {
-      debugger
       that.triggerHandlers('error', {msg, url, line, column, error});
 
       if (_oldOnErrorHandler) {
@@ -84,7 +83,7 @@ export default class LogSdk {
     };
   }
 
-  instrumentUnhandledRejection(): void {
+  public instrumentUnhandledRejection(): void {
     const _oldOnUnhandledRejectionHandler = window.onunhandledrejection;
     const that = this
     window.onunhandledrejection = function(e: any): boolean {
@@ -98,7 +97,7 @@ export default class LogSdk {
     };
   }
 
-  triggerHandlers(type: InstrumentHandlerType, data: IErrorParams) {
+  public triggerHandlers(type: InstrumentHandlerType, data: IErrorParams) {
     if (!type || !this.handlers[type]) {
       return;
     }

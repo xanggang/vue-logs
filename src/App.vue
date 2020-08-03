@@ -1,13 +1,15 @@
 <template>
   <div id="app">
-
+    <button  >1</button>
+    <button >2</button>
+    <button>3</button>
     <button @click="sendError">+</button>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import HelloWorld from './components/HelloWorld.vue';
+import { Component, Vue } from 'vue-property-decorator'
+import HelloWorld from './components/HelloWorld.vue'
 
 @Component({
   components: {

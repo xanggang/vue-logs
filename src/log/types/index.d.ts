@@ -1,15 +1,3 @@
-// import {
-//   // Breadcrumb,
-//   // Exception,
-//   // Mechanism,
-//   // Request,
-//   // SdkInfo,
-//   // Severity,
-//   // Span,
-//   Stacktrace,
-//   // User
-// } from "@/sentry-javascript-master/packages/types/src";
-
 export type EventType = 'transaction';
 
 export interface Exception {

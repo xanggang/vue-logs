@@ -7,7 +7,7 @@ import  {
   isError, isEvent,
   isPlainObject
 } from './util/is'
-import { Event } from "./types";
+import { Event } from './types';
 import {
   addExceptionMechanism,
   addExceptionTypeValue,
@@ -17,7 +17,7 @@ import {
   eventFromPlainObject
 } from './util/utils'
 
-import { computeStackTrace } from "./util/tracekit";
+import { computeStackTrace } from './util/tracekit'
 
 function _eventFromIncompleteOnError(msg: any, url: any, line: any, column: any): Event {
   const ERROR_TYPES_RE = /^(?:[Uu]ncaught (?:exception: )?)?(?:((?:Eval|Internal|Range|Reference|Syntax|Type|URI|)Error): )?(.*)$/i;
@@ -140,9 +140,9 @@ function eventFromUnknownInput(
   return event;
 }
 
-export default function (data: any ) {
+export default function(data: any ) {
   const { msg, url, line, column, error } = data
-  const event = isPrimitive(error) //非error类型的错误
+  const event = isPrimitive(error) // 非error类型的错误
     ? _eventFromIncompleteOnError(msg, url, line, column)
     : _enhanceEventWithInitialFrame(
       eventFromUnknownInput(error, undefined, {
