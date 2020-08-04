@@ -1,78 +1,62 @@
 const glob = require('glob')
 const path = require('path')
 const fs = require('fs')
-const axios = require('axios')
 const http = require('http')
-
+const packagePath = process.cwd()
+const pkg = require(path.join(packagePath, 'package.json'))
+const projectName = pkg.nabla
 
 module.exports = class {
-  constructor() {
-
+  constructor(option = {}) {
+    if (!option.uploadUrl) {
+      throw new Error('请输入uploadUrl')
+    }
+    this.uploadUrl = option.uploadUrl
   }
 
   apply(compiler) {
-    compiler.hooks.done.tap('MyPlugin', function (e) {
-      console.log('------------');
-      console.log('MyPlugin');
-      console.log('------------');
+    compiler.hooks.done.tap('upload-sourcemap-plugin', async e => {
       const _path = e.compilation.options.output.path
       const list = glob.sync(path.join(_path, './**/*.{js.map,}'))
-      list.forEach(i => {
-        console.log(i);
-        const s = fs.readFileSync(i)
+      for (let i of list) {
+        await this.upload(i)
+          .catch(e => {
+            console.error(e);
+          })
+      }
 
-        let option = {
-          host: '127.0.0.1',   //请求host
-          path: "/file",  //请求链接
-          port: 7001,            //端口
-          method: "POST",  //请求类型
-          headers: {   //请求头
-            'Content-Type': 'application/octet-stream',  //数据格式为二进制数据流
-            'Transfer-Encoding': 'chunked',  //传输方式为分片传输
-            'Connection': 'keep-alive'    //这个比较重要为保持链接。
-          }
+    })
+  }
+
+  upload(filePath) {
+    console.log('上传' + filePath);
+    return new Promise((resolve, reject) => {
+      const appName = projectName || 'not-name'
+      const url = `${this.uploadUrl}?fileName=${path.basename(filePath)}&appName=${appName}`
+      let option = {
+        method: "POST",  //请求类型
+        headers: {   //请求头
+          'Content-Type': 'application/octet-stream',  //数据格式为二进制数据流
+          'Transfer-Encoding': 'chunked',  //传输方式为分片传输
+          'Connection': 'keep-alive'    //这个比较重要为保持链接。
         }
-        let req = http.request(option);
-        req.write(s);  //发送数据
-        req.end();   //
+      }
 
-        // fs.createReadStream(path.join(__dirname, "line.png"))
-        //   .on("open", chunk => {
-        //   })
-        //   .on("data", chunk => {
-        //     req.write(chunk);  //发送数据
-        //   })
-        //   .on("end", () => {
-        //     req.end();   //发送结束
-        //   })
-
-        // fs.unlinkSync(i);
-      })
+      let req = http.request(url, option, res => {
+        if (res.statusCode !== 200) {
+          reject(`${filePath}上传失败`)
+        } else {
+          resolve(filePath)
+          req.abort()
+        }
+      });
+      fs.createReadStream(filePath)
+        .on('data', chunk => {
+          req.write(chunk)
+        })
+        .on('end', () => {
+          req.end();
+        })
     })
   }
 }
-
-
-function send() {
-  console.log('----my---')
-  let a = '/Users/lynn/Documents/www/lynn/log/dist/js/app.8869bc4e.js.map'
-  const s = fs.readFileSync(a)
-  console.log(s);
-
-  let option = {
-    host: '127.0.0.1',   //请求host
-    path: "/file",  //请求链接
-    port: 7001,            //端口
-    method: "POST",  //请求类型
-    headers: {   //请求头
-      'Content-Type': 'application/octet-stream',  //数据格式为二进制数据流
-      'Transfer-Encoding': 'chunked',  //传输方式为分片传输
-      'Connection': 'keep-alive'    //这个比较重要为保持链接。
-    }
-  }
-  let req = http.request(option);
-  req.write(s);  //发送数据
-  req.end();
-}
-
-send()
