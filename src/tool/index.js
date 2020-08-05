@@ -4,7 +4,7 @@ const fs = require('fs')
 const http = require('http')
 const packagePath = process.cwd()
 const pkg = require(path.join(packagePath, 'package.json'))
-const projectName = pkg.nabla
+const projectName = pkg.name
 
 module.exports = class {
   constructor(option = {}) {
@@ -15,6 +15,9 @@ module.exports = class {
   }
 
   apply(compiler) {
+    if (process.env.NODE_ENV !== 'production') {
+      return
+    }
     compiler.hooks.done.tap('upload-sourcemap-plugin', async e => {
       const _path = e.compilation.options.output.path
       const list = glob.sync(path.join(_path, './**/*.{js.map,}'))

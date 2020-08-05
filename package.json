@@ -12,6 +12,7 @@
     "core-js": "^3.6.5",
     "glob": "^7.1.6",
     "raven-js": "^3.27.2",
+    "tracekit": "^0.4.5",
     "ua-device": "^0.1.10",
     "vue": "^2.6.11",
     "vue-class-component": "^7.2.3",

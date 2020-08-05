@@ -7305,6 +7305,11 @@ tough-cookie@~2.5.0:
     psl "^1.1.28"
     punycode "^2.1.1"
 
+tracekit@^0.4.5:
+  version "0.4.5"
+  resolved "https://registry.npm.taobao.org/tracekit/download/tracekit-0.4.5.tgz#55d40ea76ddf2bde137d9aaeb94933b5e94c5991"
+  integrity sha1-VdQOp23fK94TfZquuUkztelMWZE=
+
 tryer@^1.0.1:
   version "1.0.1"
   resolved "https://registry.npm.taobao.org/tryer/download/tryer-1.0.1.tgz#f2c85406800b9b0f74c9f7465b81eaad241252f8"

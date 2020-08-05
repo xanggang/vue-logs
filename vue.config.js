@@ -6,7 +6,7 @@ module.exports = {
   configureWebpack: {
     plugins: [
       new uploadSourceMapWebPlugin({
-        uploadUrl: 'http://127.0.0.1:7001/file'
+        uploadUrl: 'http://127.0.0.1:7001/upload/map'
       })
     ]
   },
