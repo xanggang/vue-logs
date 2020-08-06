@@ -9,6 +9,7 @@
     <button @click="get">
       get
     </button>
+    <HelloWorld msg="1111"></HelloWorld>
 
     <div v-html="html"></div>
   </div>
@@ -80,7 +81,7 @@ export default class App extends Vue {
       "extra": {"componentName": "component <r>", "lifecycleHook": "v-on handler", "session:duration": 1097},
       "event_id": "851bc07211004fe0bf8f05f889bf5dba"
     })
-    this.html = s.data.context
+    this.html = s.data.err_content
   }
 }
 </script>
