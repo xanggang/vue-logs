@@ -42,10 +42,6 @@ export default class LogSdk {
       type: 'unhandledrejection',
       callback: globalOnUnhandledRejectionHandler
     })
-
-    const output = new UA(navigator.userAgent);
-
-    console.log(output);
   }
 
   public addInstrumentationHandler(handler: InstrumentHandler) {

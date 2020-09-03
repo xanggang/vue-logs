@@ -10,9 +10,23 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 @Component
 export default class HelloWorld extends Vue {
   @Prop() private msg!: any;
+  @Prop() mydata !: any
+
+  mydataCopy = this.mydata
+
+  get mydataCopy2 () {
+    const s = {
+      a: this.mydata.a
+    }
+    return s
+  }
+
 
   public set() {
-    this.msg()
+    // this.mydata.a++
+    // this.mydataCopy.a++
+    this.mydataCopy2.a++
+
   }
 }
 </script>

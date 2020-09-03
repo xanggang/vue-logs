@@ -9,9 +9,10 @@
     <button @click="get">
       get
     </button>
-    <HelloWorld msg="1111"></HelloWorld>
 
-    <div v-html="html"></div>
+    <br>
+    {{ mydata }}
+    <HelloWorld msg="1111" :mydata="mydata"></HelloWorld>
   </div>
 </template>
 
@@ -19,6 +20,7 @@
 import { Component, Vue } from 'vue-property-decorator'
 import HelloWorld from './components/HelloWorld.vue'
 import axios from 'axios'
+import apiClass from './test'
 
 @Component({
   components: {
@@ -28,13 +30,17 @@ import axios from 'axios'
 export default class App extends Vue {
   public a: any = null
   public html = ''
+  public mydata = {
+    a: 1,
+    b: 2
+  }
 
   public sendError() {
     this.a()
   }
 
   public async get() {
-    const s = await axios.post('http://127.0.0.1:7001/upload/store', {
+    const s = await axios.post('http://127.0.0.1:7001/api/log/store', {
       "appName": "log",
       "project": "file",
       "logger": "javascript",
@@ -76,12 +82,19 @@ export default class App extends Vue {
           }
         }], "mechanism": {"type": "generic", "handled": true}
       },
-      "transaction": "http://127.0.0.1:9006/js/app.c4d91db9.js",
+      "transaction": "http://127.0.0.1:9006/js/app.c4d91db8.js",
       "trimHeadFrames": 0,
       "extra": {"componentName": "component <r>", "lifecycleHook": "v-on handler", "session:duration": 1097},
       "event_id": "851bc07211004fe0bf8f05f889bf5dba"
     })
     this.html = s.data.err_content
+  }
+
+  mounted() {
+    // apiClass.sendMessage({
+    //   a: 1,
+    //   b: 2
+    // })
   }
 }
 </script>
